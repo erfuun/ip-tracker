@@ -1,3 +1,6 @@
+<script setup>
+import IPInfo from "../components/IPInfo.vue";
+</script>
 <template>
   <div class="flex flex-col h-screen max-h-screen">
     <!-- Search / Results -->
@@ -33,13 +36,8 @@
           </i>
         </div>
       </div>
+      <!-- IP Info -->
+      <IPInfo />
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "Home",
-  components: {}
-};
-</script>

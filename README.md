@@ -1,4 +1,4 @@
-# ip-tracker
+# IP Address Tracker
 
 ## Project setup
 ```
