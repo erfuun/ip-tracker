@@ -1,5 +1,24 @@
 <script setup>
 import IPInfo from "../components/IPInfo.vue";
+import leaflet from "leaflet";
+import { onMounted } from "@vue/runtime-core";
+let map;
+onMounted(() => {
+  map = leaflet.map("mapid").setView([42.5145, -83.0147], 9);
+  leaflet
+    .tileLayer(
+      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3Qwa2xuemgwMWNrMndxcDF3azZnbHhpIn0._iLl_joRGqEE08QjYx52UA",
+      {
+        maxZoom: 18,
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken:
+          "pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3Qwa2xuemgwMWNrMndxcDF3azZnbHhpIn0._iLl_joRGqEE08QjYx52UA"
+      }
+    )
+    .addTo(map);
+});
 </script>
 <template>
   <div class="flex flex-col h-screen max-h-screen">
@@ -39,5 +58,7 @@ import IPInfo from "../components/IPInfo.vue";
       <!-- IP Info -->
       <IPInfo />
     </div>
+    <!-- Map -->
+    <div class="z-10 h-full" id="mapid"></div>
   </div>
 </template>
