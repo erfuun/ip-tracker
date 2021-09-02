@@ -11,7 +11,7 @@ const mapboxToken =
   "pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3QzaHdodW0wMGpuMm9wNzFkZmxqMWhxIn0.3VyMKEhaoPeVFYFD7vN1wg";
 
 onMounted(() => {
-  map = leaflet.map("mapid").setView([27.2046, 77.4977], 9);
+  map = leaflet.map("mapid").setView([32.6428678, 51.6679784], 9);
   leaflet
     .tileLayer(
       `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
