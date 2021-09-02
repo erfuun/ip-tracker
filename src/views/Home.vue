@@ -6,8 +6,9 @@ import { onMounted, ref } from "@vue/runtime-core";
 let map;
 let queryIp = ref("");
 let ipInfo = ref(null);
-const apiKey = process.env.IP_GEO_API_KEY;
-const mapboxToken = process.env.MAPBOX_TOKEN;
+const apiKey = "at_sPv2CtQVZZKILcQdlHCfacNikFFQP"; // Use Your Own instead
+const mapboxToken =
+  "pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3QzaHdodW0wMGpuMm9wNzFkZmxqMWhxIn0.3VyMKEhaoPeVFYFD7vN1wg";
 
 onMounted(() => {
   map = leaflet.map("mapid").setView([42.5145, -83.0147], 9);
