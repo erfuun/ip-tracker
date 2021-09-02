@@ -6,22 +6,22 @@ import { onMounted, ref } from "@vue/runtime-core";
 let map;
 let queryIp = ref("");
 let ipInfo = ref(null);
-const apiKey = "at_sPv2CtQVZZKILcQdlHCfacNikFFQP";
+const apiKey = process.env.IP_GEO_API_KEY;
+const mapboxToken = process.env.MAPBOX_TOKEN;
 
 onMounted(() => {
   map = leaflet.map("mapid").setView([42.5145, -83.0147], 9);
   leaflet
     .tileLayer(
-      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3Qwa2xuemgwMWNrMndxcDF3azZnbHhpIn0._iLl_joRGqEE08QjYx52UA",
+      `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`,
       {
         maxZoom: 18,
         attribution:
-              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
+          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: "mapbox/streets-v11",
         tileSize: 512,
         zoomOffset: -1,
-        accessToken:
-          "pk.eyJ1IjoiZWZuaW5qYSIsImEiOiJja3Qwa2xuemgwMWNrMndxcDF3azZnbHhpIn0._iLl_joRGqEE08QjYx52UA"
+        accessToken: `${mapboxToken}`
       }
     )
     .addTo(map);
