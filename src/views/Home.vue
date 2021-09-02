@@ -1,8 +1,13 @@
 <script setup>
 import IPInfo from "../components/IPInfo.vue";
 import leaflet from "leaflet";
-import { onMounted } from "@vue/runtime-core";
+import axios from "axios";
+import { onMounted, ref } from "@vue/runtime-core";
 let map;
+let queryIp = ref("");
+let ipInfo = ref(null);
+const apiKey = "at_sPv2CtQVZZKILcQdlHCfacNikFFQP";
+
 onMounted(() => {
   map = leaflet.map("mapid").setView([42.5145, -83.0147], 9);
   leaflet
@@ -19,6 +24,29 @@ onMounted(() => {
     )
     .addTo(map);
 });
+// Get Ip information from Api
+
+const getIpInfo = async () => {
+  try {
+    const response = await axios.get(
+      `https://geo.ipify.org/api/v1?apiKey=${apiKey}&ipAddress=${queryIp.value}`
+    );
+    console.log(response);
+    const result = response.data;
+    ipInfo.value = {
+      address: result.ip,
+      state: result.location.region,
+      timezone: result.location.timezone,
+      isp: result.isp,
+      lat: result.location.lat,
+      lng: result.location.lng
+    };
+    leaflet.marker([result.location.lat, result.location.lng]).addTo(map);
+    map.setView([result.location.lat, result.location.lng], 13);
+  } catch (err) {
+    alert(err.message);
+  }
+};
 </script>
 <template>
   <div class="flex flex-col h-screen max-h-screen">
@@ -31,11 +59,13 @@ onMounted(() => {
         <h1 class="text-white text-center text-3xl pb-4">IP Address Tracker</h1>
         <div class="flex">
           <input
+            v-model="queryIp"
             class="flex-1 py-3 px-2 rounded-tl-md rounded-bl-md focus:outline-none"
             type="text"
             placeholder="Search for any IP address or leave empty to get your ip info"
           />
           <i
+            @click="getIpInfo"
             class="flex items-center px-4 bg-black text-white rounded-tr-md rounded-br-md pb-1 cursor-pointer"
           >
             <svg
@@ -56,7 +86,7 @@ onMounted(() => {
         </div>
       </div>
       <!-- IP Info -->
-      <IPInfo />
+      <IPInfo v-if="ipInfo" :ipInfo="ipInfo" />
     </div>
     <!-- Map -->
     <div class="z-10 h-full" id="mapid"></div>
